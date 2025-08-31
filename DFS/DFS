@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Mar  1 18:00:46 2025
+
+@author: Edmundo
+"""
+
+G = {"a":["b","c","g"],"b":["a","d","g"],"c":["a","d","e"],"d":["b","c","f"],
+     "e":["c","f","g"],"f":["d","e","h"],"g":["a","b","e"],"h":["f"]}
+V1= "a"
+
+
+
+def DFS(G,V1):
+    Vp = [V1]
+    Ep = []
+    w = V1
+    while True:
+        while True:
+            for x in G[w]:
+                if not x in Vp:
+                    Vp.append(x)
+                    Ep.append((w,x))
+                    w = x
+                    break
+            if w == V1:
+                break
+            if all(val in Vp for val in G[w]):
+                break
+        p = Vp.index(w)
+        w = Vp[p-1]
+        if w == V1:
+            T = (Vp,Ep)
+            break
+    return T
+
+print(DFS(G,V1))
+    

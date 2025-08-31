@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar 13 18:26:59 2025
+
+@author: Edmundo
+"""
+
+Grafo = {"a":{'b':2,'f':1},
+     "b":{'a':2,'c':2,'d':2,'e':4},
+     "c":{'b':2,'e':3,'z':1},
+     "d":{'b':2,'e':4,'f':3},
+     "e":{'b':4,'c':3,'d':4,'e':7},
+     "f":{'a':1,'d':3,'g':5},
+     "g":{'e':7,'f':5,'z':6},
+     "z":{'c':1,'g':6}}
+
+inicio = "a"
+final = "z"
+
+T = list(Grafo.keys())
+
+L = {}
+for x in T:
+    L[x] = float("inf")
+L[inicio] = 0
+Ruta = {}
+Camino = []
+
+while final in T:
+    distanciaMinima = float("inf")
+    for v in T:
+        if distanciaMinima > L[v]:
+            distanciaMinima = L[v]
+            Vmin = v
+    T.remove(Vmin)
+    for x in Grafo[Vmin]:
+        if x in T:
+            if L[x] > L[Vmin] + Grafo[Vmin][x]:
+                L[x] = L[Vmin] + Grafo[Vmin][x]
+                Ruta[x] = Vmin
+
+indice = final
+
+while indice != inicio:
+    Camino.append(indice)
+    indice = Ruta[indice]   
+Camino.append(inicio)
+Camino.sort()
+                   

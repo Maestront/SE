@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Feb  7 19:44:16 2025
+
+@author: 22310175
+"""
+
+Grafo = {"a":["b","c","g"],"b":["a","d","g"],"c":["a","e","d"],"d":["b","f","c"],
+     "e":["c","f","g"],"f":["e","d","h"],"g":["a","e","b"],"h":["f"]}
+Raiz = "a"
+
+
+Vp = [Raiz]
+Ep = []
+S = [Raiz]
+Sd = []
+V = list(Grafo.keys())
+Vd = V.copy()
+Vd.remove(Raiz)
+Vt=Vd.copy()
+
+while True:
+    for x in S: 
+        for y in Vt:
+            if y in Grafo[x]:   
+                Ep.append((x,y))
+                Vp.append(y)
+                Sd.append(y)  
+                Vd.remove(y)
+        Vt=Vd.copy()            
+    
+    if Sd==[]:
+        T = (Vp,Ep)
+        break
+    S=Sd.copy()
+    Sd=[]
