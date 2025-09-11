@@ -1,4 +1,20 @@
-# chatbot_simple.py
+# chatbot_persistente.py
+import json
+import os
+
+# Nombre del archivo donde guardaremos la base
+archivo = "base_conocimiento.json"
+
+if os.path.exists(archivo):
+    with open(archivo, "r", encoding="utf-8") as f:
+        base_conocimiento = json.load(f)
+else:
+    # Base inicial
+    base_conocimiento = {
+        "hola": "Hola, ¿cómo estás?",
+        "como estas": "Estoy bien, gracias. ¿Y tú?",
+        "de que te gustaria hablar": "Podemos hablar de sistemas expertos o de lo que quieras."
+    }
 
 # Base de conocimiento inicial (diccionario clave:respuesta)
 base_conocimiento = {
