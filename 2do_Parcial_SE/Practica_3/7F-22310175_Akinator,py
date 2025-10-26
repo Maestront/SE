@@ -9,46 +9,38 @@ def cargar_base_datos(archivo):
         with open(archivo, "r", encoding="utf-8") as f:
             return json.load(f)
     else:
-        return {
+         return {
             "león": ["sí","sí","sí","sí","no","sí","no"],
             "tigre": ["sí","sí","sí","sí","no","sí","no"],
             "elefante": ["sí","sí","sí","no","no","sí","no"],
             "jirafa": ["sí","sí","sí","no","no","sí","no"],
             "cebra": ["sí","sí","sí","no","no","sí","no"],
             "perro": ["sí","sí","no","sí","sí","sí","no"],
-            "gato": ["sí","sí","no","sí","sí","sí","0"],
-            "vaca": ["sí","sí","sí","0","sí","sí","0"],
-            "caballo": ["sí","sí","sí","0","sí","sí","0"],
-            "cerdo": ["sí","sí","0","0","sí","sí","0"],
-            "mono": ["sí","sí","0","0","0","sí","0"],
-            "humano": ["sí","sí","0","0","sí","sí","0"],
-            "delfín": ["sí","0","0","sí","0","sí","0"],
-            "ballena": ["sí","0","sí","0","0","sí","0"],
-            "murciélago": ["sí","sí","0","sí","0","sí","sí"],
-            "águila": ["no","sí","0","sí","0","0","sí"],
-            "gallina": ["no","sí","0","0","sí","0","sí"],
-            "pato": ["no","sí","0","0","sí","0","sí"],
-            "pingüino": ["no","sí","0","sí","0","0","0"],
-            "loro": ["no","sí","0","0","sí","0","sí"],
-            "búho": ["no","sí","0","sí","0","0","sí"],
-            "avestruz": ["no","sí","sí","0","0","0","0"],
-            "tiburón": ["no","0","sí","sí","0","0","0"],
-            "pez dorado": ["no","0","0","0","sí","0","0"],
-            "pez payaso": ["no","0","0","0","0","0","0"],
-            "mantarraya": ["no","0","sí","0","0","0","0"],
-            "tortuga": ["no","sí","0","0","0","0","0"],
-            "cocodrilo": ["no","sí","sí","sí","0","0","0"],
-            "serpiente": ["no","sí","0","sí","0","0","0"],
-            "rana": ["no","sí","0","0","0","0","0"],
-            "sapo": ["no","sí","0","0","0","0","0"],
-            "zorra": ["sí","sí","0","sí","0","sí","0"],
-            "lobo": ["sí","sí","sí","sí","0","sí","0"],
-            "oso": ["sí","sí","sí","sí","0","sí","0"],
-            "cabra": ["sí","sí","0","0","sí","sí","0"],
-            "oveja": ["sí","sí","0","0","sí","sí","0"],
-            "ardilla": ["sí","sí","0","0","0","sí","0"],
-            "conejo": ["sí","sí","0","0","sí","sí","0"],
-            "ratón": ["sí","sí","0","0","0","sí","0"]
+            "gato": ["sí","sí","no","sí","sí","sí","no"],
+            "vaca": ["sí","sí","sí","no","sí","sí","no"],
+            "caballo": ["sí","sí","sí","no","sí","sí","no"],
+            "cerdo": ["sí","sí","no","no","sí","sí","no"],
+            "mono": ["sí","sí","no","no","no","sí","no"],
+            "humano": ["sí","sí","no","no","sí","sí","no"],
+            "delfín": ["sí","no","no","sí","no","sí","no"],
+            "ballena": ["sí","no","sí","no","no","sí","no"],
+            "murciélago": ["sí","sí","no","sí","no","sí","sí"],
+            "águila": ["no","sí","no","sí","no","no","sí"],
+            "gallina": ["no","sí","no","no","sí","no","sí"],
+            "pato": ["no","sí","no","no","sí","no","sí"],
+            "pingüino": ["no","sí","no","sí","no","no","no"],
+            "loro": ["no","sí","no","no","sí","no","sí"],
+            "búho": ["no","sí","no","sí","no","no","sí"],
+            "avestruz": ["no","sí","sí","no","no","no","no"],
+            "tiburón": ["no","no","sí","sí","no","no","no"],
+            "pez dorado": ["no","no","no","no","sí","no","no"],
+            "pez payaso": ["no","no","no","no","no","no","no"],
+            "mantarraya": ["no","no","sí","no","no","no","no"],
+            "tortuga": ["no","sí","no","no","no","no","no"],
+            "cocodrilo": ["no","sí","sí","sí","no","no","no"],
+            "serpiente": ["no","sí","no","sí","no","no","no"],
+            "rana": ["no","sí","no","no","no","no","no"],
+            "sapo": ["no","sí","no","no","no","no","no"]
         }
 
 def guardar_base_datos(archivo, datos):
@@ -60,11 +52,12 @@ class AkinatorAnimales:
     def __init__(self, root):
         self.root = root
         self.root.title("Akinator de Animales")
-        self.root.geometry("520x460")
+        self.root.geometry("520x480")
         self.root.resizable(False, False)
         self.root.configure(bg="#f0f4f8")
 
-        self.archivo = "animales.json"
+        carpeta_actual = os.path.dirname(os.path.abspath(__file__))
+        self.archivo = os.path.join(carpeta_actual, "animales.json")
         self.animales = cargar_base_datos(self.archivo)
 
         self.preguntas = [
@@ -79,32 +72,22 @@ class AkinatorAnimales:
         self.respuestas = []
         self.indice_pregunta = 0
 
-        # ---- Interfaz ----
+        # Interfaz
         self.frame = tk.Frame(self.root, bg="#f0f4f8")
         self.frame.pack(expand=True)
 
-        self.titulo = tk.Label(
-            self.frame, text="Akinator de Animales", 
-            font=("Arial", 20, "bold"), bg="#f0f4f8", fg="#2c3e50"
-        )
+        self.titulo = tk.Label(self.frame, text="Akinator de Animales", font=("Arial", 20, "bold"),
+                               bg="#f0f4f8", fg="#2c3e50")
         self.titulo.pack(pady=15)
 
-        self.label_pregunta = tk.Label(
-            self.frame, text="Piensa en un animal...",
-            font=("Arial", 14), bg="#f0f4f8", fg="#34495e", wraplength=480
-        )
+        self.label_pregunta = tk.Label(self.frame, text="Piensa en un animal...",
+                                       font=("Arial", 14), bg="#f0f4f8", fg="#34495e", wraplength=480)
         self.label_pregunta.pack(pady=15)
 
         # Barra de progreso
-        self.barra_progreso = ttk.Progressbar(
-            self.frame, length=450, mode='determinate', maximum=len(self.preguntas)
-        )
+        self.barra_progreso = ttk.Progressbar(self.frame, length=450, mode='determinate', maximum=len(self.preguntas))
         self.barra_progreso.pack(pady=10)
-
-        self.label_progreso = tk.Label(
-            self.frame, text="", font=("Arial", 12, "italic"),
-            bg="#f0f4f8", fg="#7f8c8d"
-        )
+        self.label_progreso = tk.Label(self.frame, text="", font=("Arial", 12, "italic"), bg="#f0f4f8", fg="#7f8c8d")
         self.label_progreso.pack()
 
         self.frame_botones = tk.Frame(self.frame, bg="#f0f4f8")
@@ -112,37 +95,27 @@ class AkinatorAnimales:
 
         estilo_boton = {"font": ("Arial", 12, "bold"), "width": 12, "height": 1}
 
-        self.boton_si = tk.Button(
-            self.frame_botones, text="Sí", bg="#27ae60", fg="white",
-            activebackground="#2ecc71", command=lambda: self.responder("sí"), **estilo_boton
-        )
+        self.boton_si = tk.Button(self.frame_botones, text="Sí", bg="#27ae60", fg="white",
+                                  activebackground="#2ecc71", command=lambda: self.responder("sí"), **estilo_boton)
         self.boton_si.grid(row=0, column=0, padx=20)
 
-        self.boton_no = tk.Button(
-            self.frame_botones, text="No", bg="#c0392b", fg="white",
-            activebackground="#e74c3c", command=lambda: self.responder("no"), **estilo_boton
-        )
+        self.boton_no = tk.Button(self.frame_botones, text="No", bg="#c0392b", fg="white",
+                                  activebackground="#e74c3c", command=lambda: self.responder("no"), **estilo_boton)
         self.boton_no.grid(row=0, column=1, padx=20)
 
-        # Botón para mostrar lista de animales
-        self.boton_lista = tk.Button(
-            self.frame_botones, text="Ver lista de animales", bg="#2980b9", fg="white",
-            activebackground="#3498db", font=("Arial", 10, "bold"), command=self.mostrar_animales
-        )
+        # Botón ver animales
+        self.boton_lista = tk.Button(self.frame_botones, text="Ver lista de animales", bg="#2980b9", fg="white",
+                                     activebackground="#3498db", font=("Arial", 10, "bold"), command=self.mostrar_animales)
         self.boton_lista.grid(row=1, column=0, columnspan=2, pady=10)
 
-        # Evento de cierre
         self.root.protocol("WM_DELETE_WINDOW", self.cerrar_seguro)
-
         self.mostrar_pregunta()
 
     # ---------- Funciones ----------
     def mostrar_pregunta(self):
         if self.indice_pregunta < len(self.preguntas):
             self.label_pregunta.config(text=self.preguntas[self.indice_pregunta])
-            self.label_progreso.config(
-                text=f"Pregunta {self.indice_pregunta + 1} de {len(self.preguntas)}"
-            )
+            self.label_progreso.config(text=f"Pregunta {self.indice_pregunta + 1} de {len(self.preguntas)}")
             self.barra_progreso['value'] = self.indice_pregunta
         else:
             self.adivinar()
@@ -159,16 +132,67 @@ class AkinatorAnimales:
                 posibles.append(animal)
 
         if posibles:
-            resultado = ", ".join(posibles)
-            messagebox.showinfo("Resultado", f"Creo que tu animal es: {resultado}.")
+            # Preguntar si está el animal
+            self.mostrar_posibles(posibles)
+        else:
+            self.registrar_nuevo_animal()
+
+    def mostrar_posibles(self, animales_posibles):
+        top = tk.Toplevel(self.root)
+        top.title("Animales posibles")
+        top.geometry("400x300")
+        tk.Label(top, text="Estos son los animales que coinciden:", font=("Arial", 12, "bold")).pack(pady=10)
+        lista_animales = "\n".join(animales_posibles)
+        tk.Label(top, text=lista_animales, font=("Arial", 12)).pack(pady=10)
+
+        tk.Label(top, text="¿Está tu animal en la lista?", font=("Arial", 12, "italic")).pack(pady=5)
+
+        boton_si = tk.Button(top, text="Sí", bg="#27ae60", fg="white", width=12,
+                             command=lambda: [top.destroy(), self.reiniciar()])
+        boton_si.pack(pady=5)
+
+        boton_no = tk.Button(top, text="No", bg="#c0392b", fg="white", width=12,
+                             command=lambda: [top.destroy(), self.registrar_nuevo_animal()])
+        boton_no.pack(pady=5)
+
+    def registrar_nuevo_animal(self):
+        top = tk.Toplevel(self.root)
+        top.title("Registrar nuevo animal")
+        top.geometry("520x500")
+        tk.Label(top, text="No lo adiviné. Ingresa tu animal:", font=("Arial", 12, "bold")).pack(pady=10)
+        nombre_animal = tk.Entry(top, font=("Arial", 12), width=30)
+        nombre_animal.pack(pady=5)
+
+        tk.Label(top, text="Tus respuestas fueron:", font=("Arial", 12, "bold")).pack(pady=10)
+
+        frame_respuestas = tk.Frame(top)
+        frame_respuestas.pack(pady=5)
+
+        # Mostrar botones con colores según respuestas
+        for i, preg in enumerate(self.preguntas):
+            tk.Label(frame_respuestas, text=preg, font=("Arial", 10)).grid(row=i, column=0, sticky="w", pady=2)
+            color = "#27ae60" if self.respuestas[i] == "sí" else "#c0392b"
+            tk.Button(frame_respuestas, text=self.respuestas[i].capitalize(), bg=color, fg="white",
+                      state="disabled", width=6).grid(row=i, column=1, padx=5, pady=2)
+
+        # Botones guardar o cancelar
+        boton_guardar = tk.Button(top, text="Guardar", bg="#2980b9", fg="white", width=12,
+                                  command=lambda: self.guardar_animal(nombre_animal.get(), top))
+        boton_guardar.pack(pady=10)
+        boton_cancelar = tk.Button(top, text="Cancelar", bg="#7f8c8d", fg="white", width=12,
+                           command=lambda: [top.destroy(), self.reiniciar()])
+        boton_cancelar.pack(pady=5)
+
+    def guardar_animal(self, nombre, ventana):
+        nombre = nombre.strip().lower()
+        if nombre:
+            self.animales[nombre] = self.respuestas
+            guardar_base_datos(self.archivo, self.animales)
+            messagebox.showinfo("Aprendido", f"He aprendido el animal '{nombre}'.")
+            ventana.destroy()
             self.reiniciar()
         else:
-            nuevo = simpledialog.askstring("Nuevo animal", "No lo adiviné. ¿Cuál era tu animal?")
-            if nuevo:
-                self.animales[nuevo.lower()] = self.respuestas
-                guardar_base_datos(self.archivo, self.animales)
-                messagebox.showinfo("Aprendido", f"He aprendido el animal '{nuevo}'.")
-            self.reiniciar()
+            messagebox.showwarning("Error", "Debes escribir un nombre válido.")
 
     def reiniciar(self):
         self.respuestas = []
